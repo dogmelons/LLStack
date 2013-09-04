@@ -31,12 +31,12 @@ public:
 		delete tail;
 	}
 
-	bool isEmpty()
+	bool isEmpty()					//tests if list is empty
 	{
 		return head->next == tail;
 	}
 
-	void insert(const T& data, const unsigned int& pos)
+	void insert(const T& data, const unsigned int& pos)	//inserts new node w/data at specified position
 	{
 		if (!(pos <= m_size)) {
 			std::cout << "error: out of bounds";
@@ -48,7 +48,7 @@ public:
 		while(i++<pos) {
 			current = current->next;
 		}
-		n->next = current;		//rearrange links so n is inserted at specified position
+		n->next = current;
 		n->prev = current->prev;
 		n->prev->next = n;
 		current->prev = n;
@@ -57,12 +57,12 @@ public:
 		m_size++;
 	}
 
-	void insert(const T& data)
+	void insert(const T& data)			//inserts new node w/data at end of list
 	{
 		insert(data, m_size);
 	}
 
-	void remove(const unsigned int& pos)
+	void remove(const unsigned int& pos)		//removes node from specified position
 	{
 		if(m_size == 0) {
 			return;
@@ -82,12 +82,12 @@ public:
 		m_size--;
 	}
 
-	void remove()
+	void remove()					//removes node from end of list
 	{
 		remove(m_size-1);
 	}
 
-	void clear()
+	void clear()					//clears list of all nodes
 	{
 		current = head->next;
 		while(current != tail) {
@@ -99,7 +99,7 @@ public:
 		m_size = 0;
 	}
 
-	void print()
+	void print()					//prints list
 	{
 		if(head->next == tail) {
 			return;
@@ -111,7 +111,7 @@ public:
 		}
 	}
 
-	unsigned int peek(T& out)
+	unsigned int peek(T& out)			//gets data of last node
 	{
 		if(head->next == tail)
 		{
@@ -121,7 +121,7 @@ public:
 		return 1;
 	}
 
-	unsigned int size()
+	unsigned int size()				//returns size of list
 	{
 		return m_size;
 	}
