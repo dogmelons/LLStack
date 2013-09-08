@@ -31,6 +31,11 @@ public:
 		delete tail;
 	}
 
+	bool startFromHead(const unsigned int& pos)
+	{
+			return pos < (m_size/2);
+	}
+
 	bool isEmpty()					//tests if list is empty
 	{
 		return head->next == tail;
@@ -39,15 +44,31 @@ public:
 	void insert(const T& data, const unsigned int& pos)	//inserts new node w/data at specified position
 	{
 		if (!(pos <= m_size)) {
-			std::cout << "error: out of bounds";
+			std::cout << "error: out of bounds" << std::endl;
 			return;
 		}
 		nodePtr n = new node;
-		current = head->next;
-		unsigned int i = 0;
-		while(i++<pos) {
-			current = current->next;
+
+		if(startFromHead(pos))
+		{
+			current = head->next;
+			unsigned int i = 0;
+			while(i++<pos) 
+			{
+				current = current->next;
+			}
+
 		}
+		else
+		{
+			current = tail;
+			unsigned int i = m_size;
+			while(i-->pos)
+			{
+				current = current->prev;
+			}
+		}
+
 		n->next = current;
 		n->prev = current->prev;
 		n->prev->next = n;
@@ -67,24 +88,42 @@ public:
 		if(m_size == 0) {
 			return;
 		}
-		if (!(pos <= m_size)) {
-			std::cout << "error: out of bounds";
+		if (pos > m_size) {
+			std::cout << "error: out of bounds" << std::endl;
 			return;
 		}
-		unsigned int i = 0;
-		current = head->next;
-		while(i++ < pos) {
-			current = current->next;
+
+		if(startFromHead(pos))
+		{
+			unsigned int i = 0;
+			current = head->next;
+			while(i++ < pos) 
+			{
+				current = current->next;
+			}
+			current->prev->next = current->next;
+			current->next->prev = current->prev;
+			delete current;
 		}
-		current->prev->next = current->next;
-		current->next->prev = current->prev;
-		delete current;
+		else
+		{
+			unsigned int i = m_size;
+			current = tail->prev;
+			while(i-- > pos) 
+			{
+				current = current->prev;
+			}
+			current->prev->next = current->next;
+			current->next->prev = current->prev;
+			delete current;
+		}
+
 		m_size--;
 	}
 
 	void remove()					//removes node from end of list
 	{
-		remove(m_size-1);
+		remove(m_size);
 	}
 
 	void clear()					//clears list of all nodes
@@ -105,8 +144,8 @@ public:
 			return;
 		}
 		current = head->next;
-		while(current->next != tail->next) {
-			std::cout << current->info << "\n";
+		while(current != tail) {
+			std::cout << current->info << std::endl;
 			current = current->next;
 		}
 	}
