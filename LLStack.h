@@ -19,7 +19,7 @@ public:
 	{
 		list.peek(out);
 	}
-	
+
 	void pop(T& out)			//gets and pops top element
 	{
 		list.peek(out);
